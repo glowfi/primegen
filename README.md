@@ -4,19 +4,19 @@
 
 ### Dependencies
 
-> language
+#### language
 
--   python 3.11
+-   **python 3.11**
 
-> cli
+#### cli
 
--   unittest (inbuilt python module for unittesting)
--   argparse (inbuilt python module for parsing cli arguments)
+-   **unittest (inbuilt python module for unittesting)**
+-   **argparse (inbuilt python module for parsing cli arguments)**
 
-> server
+#### server
 
--   fastapi
--   sqlite
+-   **fastapi**
+-   **sqlite (database)**
 
 ### How to install and run
 
