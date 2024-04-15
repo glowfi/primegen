@@ -5,7 +5,7 @@ import algo
 from schema import Data
 
 
-async def getPrimes(sessmaker: async_sessionmaker[AsyncSession], data: Data):
+async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: Data):
     async with sessmaker() as session:
         start = time.time()
         out = []

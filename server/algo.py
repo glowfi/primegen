@@ -1,7 +1,7 @@
 # CheckPrime algo_V1
-# T.C. -> O(n/2)
+# T.C. -> O(n)
 async def isPrime_V1(n):
-    for i in range(2, (n // 2) + 1):
+    for i in range(2, n):
         if n % i == 0:
             return False
     return True
@@ -17,7 +17,7 @@ async def isPrime_V2(n):
 
 
 # Algo V1
-# T.C. -> O(upper*n/2)
+# T.C. -> O(upper*k)
 async def algo_V1(lower, upper):
     out = []
     for i in range(lower, upper + 1):
@@ -28,7 +28,7 @@ async def algo_V1(lower, upper):
 
 
 # Algo V2
-# T.C. -> O(upper*sqrt(n))
+# T.C. -> O(upper*sqrt(k))
 async def algo_V2(lower, upper):
     out = []
     for i in range(lower, upper + 1):
@@ -41,12 +41,10 @@ async def algo_V2(lower, upper):
 # Algo V3
 # T.C. -> O(upper*log(log(upper)))
 async def algo_V3(lower, upper):
-    prime = [True for i in range(upper + 1)]
+    prime = [True for _ in range(upper + 1)]
     p = 2
     while p * p <= upper:
-        if prime[p] == True:
-
-            # Update all multiples of p
+        if prime[p]:
             for i in range(p * p, upper + 1, p):
                 prime[i] = False
         p += 1

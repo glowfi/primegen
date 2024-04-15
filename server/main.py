@@ -1,9 +1,7 @@
-import uvicorn
-import os
 from fastapi import FastAPI, status, HTTPException
 from connectdb import engine
 from connectdb import sess
-from crud import getPrimes
+from crud import get_primes
 from schema import Primegen, Data
 from dotenv import load_dotenv
 
@@ -37,8 +35,9 @@ app = FastAPI(
     response_model=Primegen,
     summary="Get all Primes using V1 [fast] or V2 [faster] or V3 [fastest] algorithm",
     status_code=status.HTTP_201_CREATED,
+    tags=["Endpoints"],
 )
-async def algov1(data: Data):
+async def get_all_primes(data: Data):
     """
     Get all primes between the lower and upper bound using V1 or V2 or V3 algorithm:
 
@@ -50,6 +49,6 @@ async def algov1(data: Data):
     if data.algo not in ("V1", "V2", "V3"):
         raise HTTPException(status_code=422, detail="Only V1 or V2 or V3 allowed")
 
-    print("Server Hit!")
-    data = await getPrimes(sess, data)
+    print("server hit!")
+    data = await get_primes(sess, data)
     return data

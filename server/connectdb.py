@@ -17,13 +17,12 @@ sess = async_sessionmaker(bind=engine, expire_on_commit=False)
 
 
 # Create DB
-async def createDB():
+async def create_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
         print("Connected to DB...")
     await engine.dispose()
 
 
-# asyncio.run(createDB())
 loop = asyncio.get_event_loop()
-loop.run_until_complete(createDB())
+loop.run_until_complete(create_db())
