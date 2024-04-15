@@ -2,7 +2,7 @@ from fastapi import FastAPI, status, HTTPException
 from connectdb import engine
 from connectdb import sess
 from crud import get_primes
-from schema import Primegen, Data
+from schema import InputData, OutputData
 from dotenv import load_dotenv
 
 
@@ -32,12 +32,12 @@ app = FastAPI(
 # Route function
 @app.post(
     "/api/getprimes",
-    response_model=Primegen,
+    response_model=OutputData,
     summary="Get all Primes using V1 [fast] or V2 [faster] or V3 [fastest] algorithm",
     status_code=status.HTTP_201_CREATED,
     tags=["Endpoints"],
 )
-async def get_all_primes(data: Data):
+async def get_all_primes(data: InputData):
     """
     Get all primes between the lower and upper bound using V1 or V2 or V3 algorithm:
 

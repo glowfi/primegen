@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 # Data send as post request
-class Data(BaseModel):
+class InputData(BaseModel):
     algo: str
     upperBound: int
     lowerBound: int
@@ -20,7 +20,7 @@ class Data(BaseModel):
 
 
 # Data send as response
-class Primegen(BaseModel):
+class OutputData(BaseModel):
     id: int
     algo: str = Field(
         default="V1",
