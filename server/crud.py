@@ -2,10 +2,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from tables import PrimeGen
 import time
 import algo
-from schema import Data
+from schema import InputData
 
 
-async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: Data):
+async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: InputData):
     async with sessmaker() as session:
         start = time.time()
         out = []

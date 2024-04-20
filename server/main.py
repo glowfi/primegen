@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, HTTPException
+from fastapi import Depends, FastAPI, Request, status, HTTPException
 from connectdb import engine
 from connectdb import sess
 from crud import get_primes
@@ -27,6 +27,20 @@ app = FastAPI(
         "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
     },
 )
+
+
+# async def common_parameters(
+#     req: Request, q: str | None = None, skip: int = 0, limit: int = 100
+# ):
+#     req.state.user = {"a": 1, "new": True}
+#     return {"q": q, "skip": skip, "limit": limit, "body": req.url}
+
+
+# @app.get("/")
+# async def test(req: Request, data: dict = Depends(common_parameters)):
+#     print(req.cookies, req.state.user)
+#     print("Test Data34")
+#     return data
 
 
 # Route function

@@ -3,4 +3,4 @@
 WORKERS=6
 PORT=5000
 
-gunicorn main:app --workers "${WORKERS}" --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:"${PORT}"
+gunicorn main:app -w "${WORKERS}" -b 0.0.0.0:"${PORT}" -k uvicorn.workers.UvicornWorker --log-file=- --log-level DEBUG --reload
