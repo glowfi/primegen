@@ -22,18 +22,19 @@ async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: InputDat
 
         timeElapsed = end - start
 
-        # Insert data into the database
-        newPrime = PrimeGen(
-            algo=data.algo,
-            upperBound=data.upperBound,
-            lowerBound=data.lowerBound,
-            timeElapsed=timeElapsed,
-            result=",".join([str(x) for x in out]),
-            primeLength=len(out),
-        )
+        try:
+            # Insert data into the database
+            newPrime = PrimeGen(
+                algo=data.algo,
+                upperBound=data.upperBound,
+                lowerBound=data.lowerBound,
+                timeElapsed=timeElapsed,
+                result=",".join([str(x) for x in out]),
+                primeLength=len(out),
+            )
+            session.add(newPrime)
+            await session.commit()
+            return newPrime
 
-        # raise Exception("Some Error occured!")
-
-        session.add(newPrime)
-        await session.commit()
-        return newPrime
+        except Exception as e:
+            raise Exception(f"Database Insertion Failed {str(e)}")
