@@ -56,22 +56,22 @@ def algo_V2(lower, upper):
     return out
 
 
-# Algo V3
+# Algo V3 [Sieve of Erasthothenes]
 # T.C. -> O(upper*log(log(upper)))
 def algo_V3(lower, upper):
-    prime = [True for i in range(upper + 1)]
-    p = 2
-    while p * p <= upper:
-        if prime[p] == True:
+    # Create an array till upper+1
+    prime = [True for _ in range(upper + 1)]
 
-            # Update all multiples of p
-            for i in range(p * p, upper + 1, p):
-                prime[i] = False
-        p += 1
+    # Mark the multiples of the current i as False
+    for i in range(2, int(upper**0.5) + 1):
+        if prime[i]:
+            for j in range(i * i, upper + 1, i):
+                prime[j] = False
 
+    # Find the primes marked as 1
     out = []
-    for p in range(lower, upper + 1):
-        if prime[p]:
-            out.append(p)
+    for i in range(lower, upper + 1):
+        if prime[i]:
+            out.append(i)
 
     return out

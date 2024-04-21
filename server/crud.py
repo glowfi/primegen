@@ -10,6 +10,7 @@ async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: InputDat
         start = time.time()
         out = []
 
+        # Choose algo based on the input given
         if data.algo == "V1":
             out = await algo.algo_V1(data.upperBound, data.lowerBound)
         elif data.algo == "V2":
@@ -21,6 +22,7 @@ async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: InputDat
 
         timeElapsed = end - start
 
+        # Insert data into the database
         newPrime = PrimeGen(
             algo=data.algo,
             upperBound=data.upperBound,
@@ -29,6 +31,9 @@ async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: InputDat
             result=",".join([str(x) for x in out]),
             primeLength=len(out),
         )
+
+        # raise Exception("Some Error occured!")
+
         session.add(newPrime)
         await session.commit()
         return newPrime

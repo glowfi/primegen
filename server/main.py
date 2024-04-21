@@ -1,8 +1,11 @@
-from fastapi import Depends, FastAPI, Request, status, HTTPException
+from fastapi import Depends, FastAPI, Request, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from connectdb import engine
 from connectdb import sess
 from crud import get_primes
-from schema import InputData, OutputData
+from schema import InputData
 from dotenv import load_dotenv
 
 
@@ -43,12 +46,19 @@ app = FastAPI(
 #     return data
 
 
+# Validation Error
+@app.exception_handler(RequestValidationError)
+async def custom_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        content=jsonable_encoder({"Errors": exc.errors()}),
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+    )
+
+
 # Route function
 @app.post(
     "/api/getprimes",
-    response_model=OutputData,
     summary="Get all Primes using V1 [fast] or V2 [faster] or V3 [fastest] algorithm",
-    status_code=status.HTTP_201_CREATED,
     tags=["Endpoints"],
 )
 async def get_all_primes(data: InputData):
@@ -60,9 +70,15 @@ async def get_all_primes(data: InputData):
     - **upperBound**: required [Numbers greater than 0]
     """
 
-    if data.algo not in ("V1", "V2", "V3"):
-        raise HTTPException(status_code=422, detail="Only V1 or V2 or V3 allowed")
+    try:
+        data = await get_primes(sess, data)  # type: ignore
+        return JSONResponse(
+            content=jsonable_encoder({"data": data, "errors": None}),
+            status_code=status.HTTP_201_CREATED,
+        )
 
-    print("server hit!")
-    data = await get_primes(sess, data)
-    return data
+    except Exception as e:
+        return JSONResponse(
+            content=jsonable_encoder({"data": None, "errors": str(e)}),
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
