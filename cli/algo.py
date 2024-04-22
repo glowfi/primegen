@@ -38,6 +38,7 @@ def isPrime_V2(n):
 
 # Algo V1
 # T.C. -> O(upper*k)
+# S.C -> O(1)
 def algo_V1(lower, upper):
     out = []
     for i in range(lower, upper + 1):
@@ -48,6 +49,7 @@ def algo_V1(lower, upper):
 
 # Algo V2
 # T.C. -> O(upper*sqrt(k))
+# S.C -> O(1)
 def algo_V2(lower, upper):
     out = []
     for i in range(lower, upper + 1):
@@ -58,6 +60,7 @@ def algo_V2(lower, upper):
 
 # Algo V3 [Sieve of Erasthothenes]
 # T.C. -> O(upper*log(log(upper)))
+# S.C  -> O(upper)
 def algo_V3(lower, upper):
     # Create an array till upper+1
     prime = [True for _ in range(upper + 1)]

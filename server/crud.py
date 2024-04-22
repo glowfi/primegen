@@ -3,20 +3,29 @@ from tables import PrimeGen
 import time
 import algo
 from schema import InputData
+import requests
+
+
+async def async_wrapper(lower, upper, _algo):
+    out = []
+    if _algo == "V1":
+        out = algo.algo_V1(lower, upper)
+    elif _algo == "V2":
+        out = algo.algo_V2(lower, upper)
+    elif _algo == "V3":
+        out = algo.algo_V3(lower, upper)
+
+    # print(out, lower, upper, _algo)
+
+    return out
 
 
 async def get_primes(sessmaker: async_sessionmaker[AsyncSession], data: InputData):
     async with sessmaker() as session:
         start = time.time()
-        out = []
 
         # Choose algo based on the input given
-        if data.algo == "V1":
-            out = await algo.algo_V1(data.upperBound, data.lowerBound)
-        elif data.algo == "V2":
-            out = await algo.algo_V2(data.upperBound, data.lowerBound)
-        elif data.algo == "V3":
-            out = await algo.algo_V3(data.upperBound, data.lowerBound)
+        out = await async_wrapper(data.upperBound, data.lowerBound, data.algo)
 
         end = time.time()
 

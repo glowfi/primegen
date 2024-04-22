@@ -7,6 +7,8 @@ from connectdb import sess
 from crud import get_primes
 from schema import InputData
 from dotenv import load_dotenv
+import inspect
+import algo
 
 
 # Load ENV variables
@@ -31,19 +33,44 @@ app = FastAPI(
     },
 )
 
+# services_url = {
+#     "url": {"abc": "https:asda.//asdasd"},
+#     "function": {"V1": algo.algo_V1, "V2": algo.algo_V2},
+# }
 
-# async def common_parameters(
-#     req: Request, q: str | None = None, skip: int = 0, limit: int = 100
-# ):
-#     req.state.user = {"a": 1, "new": True}
-#     return {"q": q, "skip": skip, "limit": limit, "body": req.url}
+# ls = [("v1", "ref"), ("v2", "ref"), ("v3", "ref")]
 
 
-# @app.get("/")
-# async def test(req: Request, data: dict = Depends(common_parameters)):
-#     print(req.cookies, req.state.user)
-#     print("Test Data34")
-#     return data
+# def add_all_functions():
+#     register_algo_urls(algo.algo_V1, "V1")
+#     register_algo_urls(algo.algo_V2, "V2")
+
+
+# add_all_functions()
+
+
+# def register_algo_urls(data, alg_ver):
+#     print("Adding Algorithm...")
+
+#     if alg_ver in services_url["url"] or alg_ver in services_url["function"]:
+#         raise Exception("ALgo already exists!")
+
+#     if isinstance(data, "str"):
+#         services_url["url"][alg_ver] = data
+#     elif inspect.isfunction(data):
+#         services_url["function"][alg_ver] = data
+#     else:
+#         raise Exception("Invalid Data format!")
+
+
+# def execute_algo(alg_ver, lower, upper):
+#     if alg_ver in services_url["url"]:
+#         # Do a post request using http handler
+#         pass
+#     elif alg_ver in services_url["function"]:
+#         data = services_url["function"][alg_ver](lower, upper)
+#     else:
+#         raise Exception("Algo does not exists")
 
 
 # Validation Error
