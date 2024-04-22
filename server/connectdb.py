@@ -12,7 +12,7 @@ nest_asyncio.apply()
 load_dotenv()
 
 # Engine
-engine = create_async_engine(os.getenv("DB_URL"), echo=True)
+engine = create_async_engine(os.getenv("DB_URL"), echo=True)  # type: ignore
 sess = async_sessionmaker(bind=engine, expire_on_commit=False)
 
 

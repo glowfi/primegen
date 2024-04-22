@@ -13,14 +13,3 @@ class InputData(BaseModel):
     lowerBound: int = Field(
         gt=1, description="Any postitive number", examples=[100, 200, 300]
     )
-
-    # Examples for documentation
-    model_config = {
-        "json_schema_extra": {
-            "examples": [
-                {"algo": "V1", "lowerBound": 30, "upperBound": 100},
-                {"algo": "V1", "lowerBound": 40, "upperBound": 1000},
-                {"algo": "V1", "lowerBound": 500, "upperBound": 1000},
-            ]
-        }
-    }
